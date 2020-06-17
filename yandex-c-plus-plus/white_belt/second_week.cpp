@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -28,9 +29,23 @@ bool IsPalindrom(string s) {
     return true;
 }
 
+vector<string> PalindromFilter(vector<string> words, int minLength) {
+    vector<string> res;
+    for (auto w : words) {
+        if (!IsPalindrom(w) || w.length() < minLength) {
+            continue;
+        }
+        res.emplace_back(w);
+    }
+    return res;
+} 
+
 
 int main(int argc, char const *argv[]) {
-    cout << IsPalindrom("X") << "\n";
+    auto res = PalindromFilter({"abacaba", "aba"}, 5);
+    for (auto w : res) {
+        cout << w << "\n";
+    }
     return 0;
 }
         
