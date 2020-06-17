@@ -1,9 +1,20 @@
 #include <iostream>
 
-int main(int argc, char const *argv[])
-{
-    int a;
-    std::cin >> a;
-    std::cout << "Hello World! " << a << "\n";
+using namespace std;
+
+int Factorial(int num) {
+    if (num <= 1) {
+        return 1;
+    }
+    int res = num;
+    for (int i = 2; i < num; ++i) {
+        res *= i;
+    }
+    return res;
+}
+
+
+int main(int argc, char const *argv[]) {
+    cout << Factorial(4) << "\n";
     return 0;
 }
