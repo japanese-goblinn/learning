@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <numeric>
 
 using namespace std;
 
@@ -66,11 +67,26 @@ vector<int> Reversed(const vector<int>& v) {
     return v_reversed;
 }
 
+void AverageTemperature(int n, const vector<int>& days_temperature) {
+    auto average = accumulate(days_temperature.begin(), days_temperature.end(), 0) / n;
+    vector<int> greater_than_average_indexes;
+    for (int i = 0; i < days_temperature.size(); ++i) {
+        if (days_temperature[i] <= average)
+            continue;
+        greater_than_average_indexes.emplace_back(i);
+    }
+    cout << greater_than_average_indexes.size() << "\n";
+    for (auto e : greater_than_average_indexes)
+        cout << e << " ";
+}
+
 int main(int argc, char const *argv[]) {
-    std::vector<int> a = {1, 2, 3, 5, 4};
-    auto c = Reversed(a);
-    for (auto e : c)
-        print(e);
+    int n;
+    cin >> n;
+    vector<int> temps(n);
+    for (auto& t : temps)
+        cin >> t;
+    AverageTemperature(n, temps);
     return 0;
 }
         
