@@ -45,6 +45,11 @@ void UpdateIfGreater(int first, int& second) {
     second = first;
 }
 
+void MoveStrings(vector<string>& source, vector<string>& destination) {
+    destination.insert(destination.end(), source.begin(), source.end());
+    source.clear();
+}
+
 int main(int argc, char const *argv[]) {
     print(IsPalindrom("abac"));
     return 0;
