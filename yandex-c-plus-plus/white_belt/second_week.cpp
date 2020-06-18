@@ -80,13 +80,63 @@ void AverageTemperature(int n, const vector<int>& days_temperature) {
         cout << e << " ";
 }
 
+void Worry(vector<int>& q, int i) {
+    q[i] = 1;
+}
+
+void Quiet(vector<int>& q, int i) {
+    q[i] = 0;
+}
+
+void Come(vector<int>& q, int k) {
+    if (!k)
+        return;
+    if (k > 0) {
+        vector<int> quiet_people(k);
+        q.insert(q.end(), quiet_people.begin(), quiet_people.end());
+    } else {
+        for (int i = -k; i > 0; --i)
+            q.pop_back();
+    }
+}
+
+void WorryCount(const vector<int>& q) {
+    int count = 0;
+    for (auto e : q) {
+        if (!e)
+            continue;
+        count++;
+    }
+    print(count);
+}
+
+void QueueTask() {
+    // 0 - for quiet; 1 - for worried
+    vector<int> queue;
+    int operations_amount;
+    string command;
+    int operand;
+
+    cin >> operations_amount;
+
+    while (operations_amount--) {
+        cin >> command;
+        if (command == "WORRY_COUNT") {
+            WorryCount(queue);
+        } else {
+            cin >> operand;
+            if (command == "COME")
+                Come(queue, operand);
+            else if (command == "QUIET")
+                Quiet(queue, operand);
+            else if (command == "WORRY")
+                Worry(queue, operand);
+        }
+    }
+}
+
 int main(int argc, char const *argv[]) {
-    int n;
-    cin >> n;
-    vector<int> temps(n);
-    for (auto& t : temps)
-        cin >> t;
-    AverageTemperature(n, temps);
+    QueueTask();
     return 0;
 }
         
