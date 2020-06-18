@@ -204,15 +204,91 @@ string IsAnagrams(string a, string b) {
     return a_count == b_count ? "YES" : "NO";
 }
 
-int main(int argc, char const *argv[]) {
-    int count;
-    cin >> count;
-    string a, b;
-    while (count--) {
-        cin >> a;
-        cin >> b;
-        cout << IsAnagrams(a, b) << "\n";
+void Dump(map<string, string>& capitals) {
+    if (!capitals.size()) {
+        print("There are no countries in the world");
+        return;
     }
+    for (auto& kv : capitals) {
+        cout << kv.first << "/" << kv.second << " ";
+    }
+    cout << "\n";
+}
+
+void About(map<string, string>& capitals, string country) {
+    if (capitals[country].empty()) {
+        capitals.erase(country);
+        cout << "Country " << country << " doesn't exist" << "\n";
+        return;
+    }
+    cout << "Country " << country << " has capital " << capitals[country] << "\n";
+}
+
+void ChangeCapital(map<string, string>& capitals, string country, string new_capital) {
+    if (capitals[country].empty()) {
+        capitals[country] = new_capital;
+        cout << "Introduce new country " << country << " with capital " << new_capital << "\n";
+        return;
+    }
+    if (capitals[country] == new_capital) {
+        cout << "Country " << country << " hasn't changed its capital\n";
+        return;
+    }
+    auto old_capital = capitals[country];
+    capitals[country] = new_capital;
+    cout << "Country " << country << " has changed its capital from " << old_capital << 
+        " to " << new_capital << "\n";
+}
+
+void Rename(map<string, string>& capitals, string old_country_name, string new_country_name) {
+    if (capitals[old_country_name].empty()) {
+        capitals.erase(old_country_name);
+        print("Incorrect rename, skip");
+        return;
+    }
+    if (new_country_name == old_country_name || !capitals[new_country_name].empty()) {
+        print("Incorrect rename, skip");
+        return;
+    }
+    auto capital = capitals[old_country_name];
+    capitals.erase(old_country_name);
+    capitals[new_country_name] = capital;
+    cout << "Country " << old_country_name << " with capital " << 
+        capital << " has been renamed to " << new_country_name << "\n";
+}
+
+void CapitalsInfo() {
+    map<string, string> capitals;
+
+    int queries_amount;
+    cin >> queries_amount;
+
+    string command;
+    string country;
+
+    while (queries_amount--) {
+        cin >> command;
+        if (command == "DUMP") {
+            Dump(capitals);
+        } else if (command == "ABOUT") {
+            cin >> country;
+            About(capitals, country);
+        } else if (command == "RENAME") {
+            cin >> country;
+            string new_country_name;
+            cin >> new_country_name;
+            Rename(capitals, country, new_country_name);
+        } else if (command == "CHANGE_CAPITAL") {
+            cin >> country;
+            string new_capital;
+            cin >> new_capital;
+            ChangeCapital(capitals, country, new_capital);
+        }
+    }
+}
+
+int main(int argc, char const *argv[]) {
+    CapitalsInfo();
     return 0;
 }
         
