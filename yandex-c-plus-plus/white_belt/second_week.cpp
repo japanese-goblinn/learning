@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <numeric>
+#include <map>
 
 using namespace std;
 
@@ -192,8 +193,26 @@ void MonthlyTasks() {
     }
 }
 
+string IsAnagrams(string a, string b) {
+    if (a.size() != b.size())
+        return "NO";
+    map<char, int> a_count, b_count;
+    for (int i = 0; i < a.size(); ++i) {
+        a_count[a[i]]++;
+        b_count[b[i]]++;
+    }
+    return a_count == b_count ? "YES" : "NO";
+}
+
 int main(int argc, char const *argv[]) {
-    MonthlyTasks();
+    int count;
+    cin >> count;
+    string a, b;
+    while (count--) {
+        cin >> a;
+        cin >> b;
+        cout << IsAnagrams(a, b) << "\n";
+    }
     return 0;
 }
         
