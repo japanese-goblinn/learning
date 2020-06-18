@@ -7,6 +7,12 @@ using namespace std;
 
 #define print(x) cout << x << "\n";
 
+void printVector(std::vector<int> v) {
+    for (auto e : v) 
+        cout << e << " ";
+    cout << "\n";
+}
+
 int Factorial(int num) {
     if (num <= 1) {
         return 1;
