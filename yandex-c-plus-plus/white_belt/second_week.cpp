@@ -408,8 +408,25 @@ void UniqueStrings() {
     print(unique_strings.size());
 }
 
+set<string> BuildMapValuesSet(const map<int, string>& m) {
+    set<string> uq_values;
+    for (auto& kv : m)
+        uq_values.insert(kv.second);
+    return uq_values;
+}
+
 int main(int argc, char const *argv[]) {
-    UniqueStrings();
+    set<string> values = BuildMapValuesSet({
+        {1, "odd"},
+        {2, "even"},
+        {3, "odd"},
+        {4, "even"},
+        {5, "odd"}
+    });
+
+    for (const string& value : values) {
+      cout << value << endl;
+    }
     return 0;
 }
         
