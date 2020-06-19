@@ -287,8 +287,93 @@ void CapitalsInfo() {
     }
 }
 
+void AllBused(const map<string, vector<string>>& bus_stops) {
+    if (!bus_stops.size()) {
+        print("No buses");
+        return;
+    }
+    for (auto& kv : bus_stops) {
+        cout << "Bus " << kv.first << ": ";
+        for (auto stop : kv.second)
+            cout << stop << " ";
+        cout << "\n";
+    }
+}
+
+void StopsForBus(map<string, vector<string>>& bus_stops, map<string, vector<string>>& buses, string bus) {
+    if (!bus_stops.count(bus)) {
+        print("No bus");
+        return;
+    }
+    auto stops = bus_stops[bus];
+    for (auto stop : stops) {
+        if (buses[stop].size() == 1) {
+            cout << "Stop " << stop << ": no interchange" << "\n";
+            continue;
+        }
+        cout << "Stop " << stop << ": ";
+        for (auto bus_i : buses[stop]) {
+            if (bus_i == bus)
+                continue;
+            cout << bus_i << " ";
+        }
+        cout << "\n";
+    }
+}
+
+void BusesForStop(map<string, vector<string>>& bus_stops, map<string, vector<string>>& buses, string stop) {
+    if (!buses.count(stop)) {
+        print("No stop");
+        return;
+    }
+    auto stop_buses = buses[stop];
+    for (auto bus : stop_buses)
+        cout << bus << " ";
+    cout << "\n";
+}
+
+void NewBus(map<string, vector<string>>& bus_stops, map<string, vector<string>>& buses, string bus, int bus_count) {
+    string stop_name;
+    while (bus_count--) {
+        cin >> stop_name;
+        bus_stops[bus].emplace_back(stop_name);
+        buses[stop_name].emplace_back(bus);
+    }
+}
+
+void BusStopsOne() {
+    map<string, vector<string>> bus_stops;
+    map<string, vector<string>> buses;
+    
+    int queries_amount;
+    cin >> queries_amount;
+
+    string command;
+
+    while (queries_amount--) {
+        cin >> command;
+        if (command == "ALL_BUSES") {
+            AllBused(bus_stops);
+        } else if (command == "STOPS_FOR_BUS") {
+            string bus;
+            cin >> bus;
+            StopsForBus(bus_stops, buses, bus);
+        } else if (command == "NEW_BUS") {
+            string bus;
+            cin >> bus;
+            int bus_count;
+            cin >> bus_count;
+            NewBus(bus_stops, buses, bus, bus_count);
+        } else if (command == "BUSES_FOR_STOP") {
+            string stop;
+            cin >> stop;
+            BusesForStop(bus_stops, buses, stop);
+        }
+    }
+}
+
 int main(int argc, char const *argv[]) {
-    CapitalsInfo();
+    BusStopsOne();
     return 0;
 }
         
