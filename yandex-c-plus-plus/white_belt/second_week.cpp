@@ -3,6 +3,7 @@
 #include <vector>
 #include <numeric>
 #include <map>
+#include <set>
 
 using namespace std;
 
@@ -395,8 +396,20 @@ void BusStopsTwo() {
     }
 }
 
+void UniqueStrings() {
+    int amount;
+    cin >> amount;
+    string str;
+    set<string> unique_strings;
+    while (amount--) {
+        cin >> str;
+        unique_strings.insert(str);
+    }
+    print(unique_strings.size());
+}
+
 int main(int argc, char const *argv[]) {
-    BusStopsTwo();
+    UniqueStrings();
     return 0;
 }
         
