@@ -445,8 +445,31 @@ void Synonyms() {
     }
 }
 
+void BusStopsThree() {
+    map<set<string>, int> routes;
+    int queries_amount;
+    cin >> queries_amount;
+    int routes_count = 0;
+    int stops_amount;
+    string stop;
+    while (queries_amount--) {
+        cin >> stops_amount;
+        set<string> stops;
+        while (stops_amount--) {
+            cin >> stop;
+            stops.insert(stop);
+        }
+        if (!routes.count(stops)) {
+            routes[stops] = ++routes_count;
+            cout << "New bus " << routes_count << "\n";
+        } else {
+            cout << "Already exists for " << routes[stops] << "\n";
+        }
+    }
+}
+
 int main(int argc, char const *argv[]) {
-    Synonyms();
+    BusStopsThree();
     return 0;
 }
         
