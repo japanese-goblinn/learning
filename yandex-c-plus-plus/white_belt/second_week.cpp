@@ -415,18 +415,38 @@ set<string> BuildMapValuesSet(const map<int, string>& m) {
     return uq_values;
 }
 
-int main(int argc, char const *argv[]) {
-    set<string> values = BuildMapValuesSet({
-        {1, "odd"},
-        {2, "even"},
-        {3, "odd"},
-        {4, "even"},
-        {5, "odd"}
-    });
-
-    for (const string& value : values) {
-      cout << value << endl;
+void Synonyms() {
+    map<string, set<string>> synonyms;
+    int queries_amount;
+    cin >> queries_amount;
+    string command;
+    while (queries_amount--) {
+        cin >> command;
+        if (command == "ADD") {
+            string first, second;
+            cin >> first;
+            cin >> second;
+            synonyms[first].insert(second);
+            synonyms[second].insert(first);
+        } else if (command == "COUNT") {
+            string word;
+            cin >> word;
+            print(synonyms[word].size());
+        } else if (command == "CHECK") {
+            string first, second;
+            cin >> first;
+            cin >> second;
+            if (synonyms[first].count(second)) {
+                print("YES");
+            } else {
+                print("NO");
+            }
+        }
     }
+}
+
+int main(int argc, char const *argv[]) {
+    Synonyms();
     return 0;
 }
         
