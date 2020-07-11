@@ -16,8 +16,47 @@ void PrintVector(const vector<T>& v) {
     cout << "\n";
 }
 
+struct Specialization {
+    string value;
+
+    explicit Specialization(string v) {
+        value = v;
+    }
+};
+
+struct Course {
+    string value;
+
+    explicit Course(string v) {
+        value = v;
+    }
+};
+
+struct Week {
+    string value;
+
+    explicit Week(string v) {
+        value = v;
+    }
+};
+
+struct LectureTitle {
+    string specialization;
+    string course;
+    string week;
+
+    LectureTitle(Specialization s, Course c, Week w) {
+      specialization = s.value;
+      course = c.value;
+      week = w.value;
+    }
+};
+
 int main(int argc, char const *argv[]) {  
-  vector<int> v = {1, 2, 3};
-  PrintVector(v);  
-  return 0;
+    LectureTitle title = {
+      Specialization("C++"),
+      Course("White belt"),
+      Week("4th")
+    }; 
+    return 0;
 }
