@@ -82,22 +82,33 @@ public:
     }
 };
 
+class SortedStrings {
+private:
+    vector<string> strings;
+public:
+    void AddString(const string& s) {
+        strings.emplace_back(s);
+    }
+    vector<string> GetSortedStrings() {
+        sort(strings.begin(), strings.end());
+        return strings;
+    }
+};
+
+void PrintSortedStrings(SortedStrings& strings) {
+    for (const string& s : strings.GetSortedStrings()) {
+        cout << s << " ";
+    }
+    cout << endl;
+}
+
 int main(int argc, char const *argv[]) {    
-    Person person;  
-  person.ChangeFirstName(1965, "Polina");
-  person.ChangeLastName(1967, "Sergeeva");
-  for (int year : {1900, 1965, 1990}) {
-    cout << person.GetFullName(year) << endl;
-  }
-  
-  person.ChangeFirstName(1970, "Appolinaria");
-  for (int year : {1969, 1970}) {
-    cout << person.GetFullName(year) << endl;
-  }
-  
-  person.ChangeLastName(1968, "Volkova");
-  for (int year : {1969, 1970}) {
-    cout << person.GetFullName(year) << endl;
-  }
-    return 0;
+  SortedStrings strings;
+  strings.AddString("first");
+  strings.AddString("third");
+  strings.AddString("second");
+  PrintSortedStrings(strings);
+  strings.AddString("second");
+  PrintSortedStrings(strings);
+  return 0;
 }
