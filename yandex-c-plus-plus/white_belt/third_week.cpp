@@ -171,18 +171,15 @@ public:
     }
 };
 
+struct Incognizable {
+    int x = 0;
+    int y = 0;
+};
+
 int main(int argc, char const *argv[]) {    
-     ReversibleString s("live");
-  s.Reverse();
-  cout << s.ToString() << endl;
-  
-  s.Reverse();
-  const ReversibleString& s_ref = s;
-  string tmp = s_ref.ToString();
-  cout << tmp << endl;
-  
-  ReversibleString empty;
-  cout << '"' << empty.ToString() << '"' << endl;
-  
+    Incognizable a;
+    Incognizable b = {};
+    Incognizable c = {0};
+    Incognizable d = {0, 1};
     return 0;
 }
