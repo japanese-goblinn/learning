@@ -71,7 +71,9 @@ struct PersonData {
 class Person {
 private:
     map<int, PersonData> data;
-    void FindData(string& first_name, string& last_name, int year) {
+    int birth_year;
+
+    void FindData(string& first_name, string& last_name, int year) const {
         for (const auto& kv : data) {
             if (kv.first > year)
                 break;
@@ -81,7 +83,7 @@ private:
                 last_name = kv.second.last_name;
         }
     }
-    void FormatData(string& output, const vector<string>& v) {
+    void FormatData(string& output, const vector<string>& v) const {
         if (v.size() == 1) {
             output = v.front();
             return;
@@ -96,7 +98,7 @@ private:
         }
         output += v.back() + ")";
     }
-    void NamesAdd(const string& name, vector<string>& v) {
+    void NamesAdd(const string& name, vector<string>& v) const {
         if (name.empty())
             return;
         if (v.empty()) {
@@ -108,13 +110,23 @@ private:
         v.emplace_back(name);
     }
 public:
+    Person(const string& first_name, const string& last_name, int year) {
+        data[year] = {first_name, last_name};
+        birth_year = year;
+    }
     void ChangeFirstName(int year, const string& first_name) {
+        if (year < birth_year)
+            return;
         data[year].first_name = first_name;
     }
     void ChangeLastName(int year, const string& last_name) {
+        if (year < birth_year)
+            return;
         data[year].last_name = last_name;
     }
-    string GetFullName(int year) {
+    string GetFullName(int year) const {
+        if (year < birth_year)
+            return "No Person";
         string first_name, last_name;
         this->FindData(first_name, last_name, year);
         if (first_name.empty() && last_name.empty())
@@ -126,7 +138,9 @@ public:
         else
             return first_name + " " + last_name;
     }
-    string GetFullNameWithHistory(int year) {
+    string GetFullNameWithHistory(int year) const {
+        if (year < birth_year)
+            return "No person";
         vector<string> first_names, last_names;
         for (const auto& kv : data) {
             if (kv.first > year)
@@ -171,15 +185,24 @@ public:
     }
 };
 
-struct Incognizable {
+class Incognizable {
+public:
     int x = 0;
     int y = 0;
 };
 
 int main(int argc, char const *argv[]) {    
-    Incognizable a;
-    Incognizable b = {};
-    Incognizable c = {0};
-    Incognizable d = {0, 1};
+    Person person("Polina", "Sergeeva", 1960);
+  for (int year : {1959, 1960}) {
+    cout << person.GetFullNameWithHistory(year) << endl;
+  }
+  
+  person.ChangeFirstName(1965, "Appolinaria");
+  person.ChangeLastName(1967, "Ivanova");
+  for (int year : {1965, 1967}) {
+    cout << person.GetFullNameWithHistory(year) << endl;
+  }
+
+  return 0;
     return 0;
 }
