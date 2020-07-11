@@ -52,6 +52,18 @@ struct LectureTitle {
     }
 };
 
+struct Image {
+  double quality;
+  double freshness;
+  double rating;
+};
+
+struct Params {
+  double a;
+  double b;
+  double c;
+};
+
 class FunctionPart {
     char operation;
     double value;
@@ -66,6 +78,10 @@ class FunctionPart {
           v += value;
         else if (operation == '-')
           v -= value;
+        else if (operation == '*')
+          v *= value;
+        else if (operation == '/')
+          v /= value;
         return v;
     }
     void Invert() {
@@ -73,6 +89,10 @@ class FunctionPart {
           operation = '-';
         else if (operation == '-')
           operation = '+';
+        else if (operation == '*')
+          operation = '/';
+        else if (operation == '/')
+          operation = '*';
     }
 };
 
@@ -90,12 +110,14 @@ class Function {
         for (auto& part : parts) {
             part.Invert();
         }
+        reverse(parts.begin(), parts.end());
     }
     void AddPart(char operation, double value) {
-        parts.push_back({operation, value});
+        parts.emplace_back(FunctionPart{operation, value});
     }
 };
 
 int main() {
-    return 0;
+
+  return 0;
 }
