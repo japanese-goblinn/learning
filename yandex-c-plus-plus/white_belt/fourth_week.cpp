@@ -52,11 +52,50 @@ struct LectureTitle {
     }
 };
 
-int main(int argc, char const *argv[]) {  
-    LectureTitle title = {
-      Specialization("C++"),
-      Course("White belt"),
-      Week("4th")
-    }; 
+class FunctionPart {
+    char operation;
+    double value;
+
+  public:
+    FunctionPart(char operation, double value) {
+        this->operation = operation;
+        this->value = value;
+    }
+    double Apply(double v) const {
+        if (operation == '+')
+          v += value;
+        else if (operation == '-')
+          v -= value;
+        return v;
+    }
+    void Invert() {
+        if (operation == '+')
+          operation = '-';
+        else if (operation == '-')
+          operation = '+';
+    }
+};
+
+class Function {
+  vector<FunctionPart> parts;
+
+  public:
+    double Apply(double value) const {
+        for (const auto& part : parts) {
+            value = part.Apply(value);
+        }
+        return value;
+    }
+    void Invert() {
+        for (auto& part : parts) {
+            part.Invert();
+        }
+    }
+    void AddPart(char operation, double value) {
+        parts.push_back({operation, value});
+    }
+};
+
+int main() {
     return 0;
 }
