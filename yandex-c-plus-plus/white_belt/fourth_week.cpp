@@ -4,6 +4,7 @@
 #include <map>
 #include <set>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -46,78 +47,81 @@ struct LectureTitle {
     string week;
 
     LectureTitle(Specialization s, Course c, Week w) {
-      specialization = s.value;
-      course = c.value;
-      week = w.value;
+        specialization = s.value;
+        course = c.value;
+        week = w.value;
     }
 };
 
 struct Image {
-  double quality;
-  double freshness;
-  double rating;
+    double quality;
+    double freshness;
+    double rating;
 };
 
 struct Params {
-  double a;
-  double b;
-  double c;
+    double a;
+    double b;
+    double c;
 };
 
 class FunctionPart {
     char operation;
     double value;
 
-  public:
-    FunctionPart(char operation, double value) {
-        this->operation = operation;
-        this->value = value;
-    }
-    double Apply(double v) const {
-        if (operation == '+')
-          v += value;
-        else if (operation == '-')
-          v -= value;
-        else if (operation == '*')
-          v *= value;
-        else if (operation == '/')
-          v /= value;
-        return v;
-    }
-    void Invert() {
-        if (operation == '+')
-          operation = '-';
-        else if (operation == '-')
-          operation = '+';
-        else if (operation == '*')
-          operation = '/';
-        else if (operation == '/')
-          operation = '*';
-    }
+    public:
+      FunctionPart(char operation, double value) {
+          this->operation = operation;
+          this->value = value;
+      }
+
+      double Apply(double v) const {
+          if (operation == '+')
+            v += value;
+          else if (operation == '-')
+            v -= value;
+          else if (operation == '*')
+            v *= value;
+          else if (operation == '/')
+            v /= value;
+          return v;
+      }
+
+      void Invert() {
+          if (operation == '+')
+            operation = '-';
+          else if (operation == '-')
+            operation = '+';
+          else if (operation == '*')
+            operation = '/';
+          else if (operation == '/')
+            operation = '*';
+      }
 };
 
 class Function {
-  vector<FunctionPart> parts;
+    vector<FunctionPart> parts;
 
-  public:
-    double Apply(double value) const {
-        for (const auto& part : parts) {
-            value = part.Apply(value);
-        }
-        return value;
-    }
-    void Invert() {
-        for (auto& part : parts) {
-            part.Invert();
-        }
-        reverse(parts.begin(), parts.end());
-    }
-    void AddPart(char operation, double value) {
-        parts.emplace_back(FunctionPart{operation, value});
-    }
+    public:
+      double Apply(double value, double kek) const {
+          for (const auto& part : parts) {
+              value = part.Apply(value);
+          }
+          return value;
+      }
+
+      void Invert() {
+          for (auto& part : parts) {
+              part.Invert();
+          }
+          reverse(parts.begin(), parts.end());
+      }
+
+      void AddPart(char operation, double value) {
+          parts.emplace_back(FunctionPart{operation, value});
+      }
 };
 
 int main() {
-
-  return 0;
+    return 0;
 }
