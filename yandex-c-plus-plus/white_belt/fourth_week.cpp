@@ -122,6 +122,24 @@ class Function {
       }
 };
 
+void ReadFromFile(string file_name) {
+  ifstream input(file_name);
+  string file_string;
+  while (getline(input, file_string, '\n')) {
+    cout << file_string << "\n";
+  }
+}
+
+void ReadFromFileAndWriteToFile(string r_file, string w_file) {
+  ifstream input(r_file);
+  string file_string;
+  ofstream output(w_file);
+  while (getline(input, file_string, '\n')) {
+    output << file_string + "\n";
+  }
+}
+
 int main() {
-    return 0;
+  ReadFromFileAndWriteToFile("input.txt", "output.txt");
+  return 0;
 }
