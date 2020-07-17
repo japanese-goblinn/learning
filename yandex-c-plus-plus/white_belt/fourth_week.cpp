@@ -149,7 +149,29 @@ void FloatPrint() {
   }
 }
 
+void Table() {
+  ifstream r("input.txt");
+  if (!r.is_open())
+    cout << "Fail!" << endl;
+  int n, m;
+  int num;
+  r >> n >> m;
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      r >> num;
+      r.ignore(1);
+      cout << setw(10) << num;
+      if (j == m - 1)
+        break;
+      cout << " ";
+    }
+    if (i == n - 1)
+        break;
+    cout << endl;
+  }
+}
+
 int main() {
-  FloatPrint();
+  Table();
   return 0;
 }
