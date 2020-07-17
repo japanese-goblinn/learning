@@ -5,6 +5,7 @@
 #include <set>
 #include <algorithm>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -139,7 +140,16 @@ void ReadFromFileAndWriteToFile(string r_file, string w_file) {
   }
 }
 
+void FloatPrint() {
+  ifstream reader("input.txt");
+  float s;
+  cout << fixed << setprecision(3);
+  while (reader >> s) {
+    cout << s << "\n";
+  }
+}
+
 int main() {
-  ReadFromFileAndWriteToFile("input.txt", "output.txt");
+  FloatPrint();
   return 0;
 }
