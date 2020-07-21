@@ -171,7 +171,54 @@ void Table() {
   }
 }
 
+struct Strudent {
+  string first_name;
+  string last_name;
+  int birth_day;
+  int birth_month;
+  int birth_year;
+};
+
+void StrudentsList() {
+  vector<Strudent> students;
+  int students_amount;
+  cin >> students_amount;
+  int n = students_amount - 1;
+  string first_name, last_name;
+  int day, month, year;
+  while (students_amount--) {
+    cin >> first_name >> last_name >> day >> month >> year;
+    students.emplace_back(Strudent{first_name, last_name, day, month, year});
+  }
+  int requests_amount;
+  cin >> requests_amount;
+  string command;
+  int num = 0;
+  while (requests_amount--) {
+    cin >> command >> num;
+    if (command == "name") {
+      --num;
+      if (num < 0 || num > n) {
+        cout << "bad request\n";
+        continue;
+      } 
+      auto s = students[num];
+      cout << s.first_name << " " << s.last_name << endl;
+    } else if (command == "date") {
+      --num;
+      if (num < 0 || num > n) {
+        cout << "bad request\n";
+        continue;
+      } 
+      auto s = students[num];
+      cout << s.birth_day << "." << s.birth_month << "." << s.birth_year << endl;
+    } else {
+      cout << "bad request\n";
+    }
+  }
+}
+
 int main() {
-  Table();
+  StrudentsList();
   return 0;
 }
